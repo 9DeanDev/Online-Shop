@@ -13,6 +13,7 @@ import Suppliers from './pages/Suppliers';
 import Employees from './pages/Employees';
 import Customers from './pages/Customers';
 import Orders from './pages/Orders';
+import Cart from './pages/Cart';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />
       },
       {
         path: '/online-shop/products',

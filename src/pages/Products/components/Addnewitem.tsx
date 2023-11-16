@@ -109,7 +109,7 @@ export default function Addnewitem({ categories, suppliers, getData }: Props) {
                 </Form.Item>
             </Form>
             <Button type='primary' onClick={() => setStatus(status === 'off' ? 'on' : 'off')} style={{ float: 'right' }}>
-                {status === 'off' ? 'Add new' : 'Close form'}
+                {status === 'off' ? 'Add a new one' : 'Close form'}
             </Button>
         </div>
     )

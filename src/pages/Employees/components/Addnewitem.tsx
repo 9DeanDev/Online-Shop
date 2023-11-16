@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Select, message } from 'antd'
+import { Button, DatePicker, Form, Input, InputNumber, Select, message } from 'antd'
 import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
 
@@ -11,13 +11,13 @@ export default function Addnewitem({ getData }: Props) {
     const [status, setStatus] = useState<'on' | 'off'>('off')
 
     const addNewItem = async (data: any) => {
-        let response = await axiosClient.post('/online-shop/suppliers', data, {
+        let response = await axiosClient.post('/online-shop/employees', data, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('access_token')
             }
         })
         message.success('Create success')
-        form.resetFields(['name', 'phoneNumber', 'email', 'address'])
+        form.resetFields(['firstName', 'lastName', 'phoneNumber', 'email', 'address', 'birthday'])
         getData()
     }
     return (
@@ -27,7 +27,7 @@ export default function Addnewitem({ getData }: Props) {
                 wrapperCol={{ span: 16 }}
                 style={{ display: status === 'off' ? 'none' : 'block' }}
                 onFinish={addNewItem}>
-                <Form.Item label='Name' name='name' hasFeedback
+                <Form.Item label='First Name' name='firstName' hasFeedback
                     rules={[
                         {
                             required: true, message: 'Name is required'
@@ -36,14 +36,20 @@ export default function Addnewitem({ getData }: Props) {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item label='Phone' name='phoneNumber' hasFeedback>
+                <Form.Item label='Last Name' name='lastName' hasFeedback>
                     <Input />
                 </Form.Item>
                 <Form.Item label='Email' name='email' hasFeedback>
                     <Input />
                 </Form.Item>
+                <Form.Item label='Phone' name='phoneNumber' hasFeedback>
+                    <Input />
+                </Form.Item>
                 <Form.Item label='Address' name='address' hasFeedback>
                     <Input />
+                </Form.Item>
+                <Form.Item label='Birthday' name='birthday' hasFeedback>
+                    <DatePicker format={'YYYY-MM-DD'} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 4, span: 16 }} >
                     <Button htmlType='submit'>

@@ -4,9 +4,11 @@ import { Button, Space, Table, message } from 'antd'
 import Addnewitem from './components/Addnewitem'
 import EditItem from './components/EditItem'
 import numeral from 'numeral'
+import useCartStore from '../../hooks/UseCartStore'
 type Props = {}
 
 export default function Products({ }: Props) {
+    const { add } = useCartStore((state: any) => state)
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const [suppliers, setSuppliers] = useState([])
@@ -35,7 +37,7 @@ export default function Products({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <>
-                        {numeral(text).format('0,0')}
+                        {numeral(text).format('0,0')}đ
                     </>
                 )
             }
@@ -87,6 +89,7 @@ export default function Products({ }: Props) {
             title: 'Actions',
             key: 'actions',
             width: 1,
+            align: 'center',
             render: (text: any, record: any, index: number) => {
                 return (
                     <Space>
@@ -95,6 +98,9 @@ export default function Products({ }: Props) {
                             onClick={() => handleDeleteItem(record.id)}>
                             Delete
                         </Button>
+                        <Button type='primary' onClick={() => {
+                            add(record)
+                        }}>Add to cart</Button>
                     </Space>
                 )
             }

@@ -1,6 +1,8 @@
-import { Button, Form, Input, InputNumber, Modal, Select, message } from 'antd'
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, message } from 'antd'
 import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
+import moment from 'moment'
+import dayjs, { locale } from 'dayjs'
 
 type Props = {
     record: String[],
@@ -8,20 +10,21 @@ type Props = {
 }
 
 export default function EditItem({ record, getData }: Props) {
-
+    const [initialValues, setInitialValues] = useState({ birthday: '' })
     const [editForm] = Form.useForm()
 
     const [openStatus, setOpenStatus] = useState<true | false>(false)
 
-    const [idItem, setIditem] = useState('')
+    const [idItem, setIditem] = useState({})
     const openEditForm = (item: any) => {
         setOpenStatus(true)
-        editForm.setFieldsValue(item)
+        setInitialValues(item)
+        // editForm.setFieldsValue(item)
         setIditem(item.id)
     }
 
     const handleEditItem = async (data: any) => {
-        let response = await axiosClient.patch(`/online-shop/suppliers/${idItem}`, data, {
+        let response = await axiosClient.patch(`/online-shop/employees/${idItem}`, data, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('access_token')
             }
@@ -37,13 +40,18 @@ export default function EditItem({ record, getData }: Props) {
             </Button>
             <Modal open={openStatus} title='UPDATE ITEM' okText='Update'
                 onCancel={() => setOpenStatus(false)}
-                onOk={() => editForm.submit()}>
+                onOk={() => editForm.submit()}
+            >
                 <Form form={editForm}
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 16 }}
                     onFinish={handleEditItem}
+                    initialValues={{
+                        ...initialValues,
+                        birthday: dayjs(new Date(initialValues.birthday))
+                    }}
                 >
-                    <Form.Item label='Name' name='name' hasFeedback
+                    <Form.Item label='First Name' name='firstName' hasFeedback
                         rules={[
                             {
                                 required: true, message: 'Name is required'
@@ -52,17 +60,23 @@ export default function EditItem({ record, getData }: Props) {
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item label='Phone' name='phoneNumber' hasFeedback>
+                    <Form.Item label='Last Name' name='lastName' hasFeedback>
                         <Input />
                     </Form.Item>
                     <Form.Item label='Email' name='email' hasFeedback>
                         <Input />
                     </Form.Item>
+                    <Form.Item label='Phone' name='phoneNumber' hasFeedback>
+                        <Input />
+                    </Form.Item>
                     <Form.Item label='Address' name='address' hasFeedback>
                         <Input />
                     </Form.Item>
+                    <Form.Item label='Birthday' name='birthday' hasFeedback >
+                        <DatePicker format={'YYYY-MM-DD'} />
+                    </Form.Item>
                 </Form>
             </Modal>
-        </div>
+        </div >
     )
 }

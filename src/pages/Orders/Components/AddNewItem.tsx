@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Form, Input, InputNumber, Radio, Select } from 'antd'
+import { Button, DatePicker, Form, Input, Radio, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
 
@@ -63,7 +63,7 @@ export default function AddNewItem({ }: Props) {
                 <Form.Item label='Payment Type' name='paymentType' hasFeedback>
                     <Radio.Group>
                         <Radio.Button value='Credit-card'>
-                            Credit-card
+                            CREDIT CARD
                         </Radio.Button>
                         <Radio.Button value='CASH'>
                             CASH
@@ -94,27 +94,6 @@ export default function AddNewItem({ }: Props) {
                         }
                     })} />
                 </Form.Item>
-                {/* <Form.Item label='Order Details' name='orderDetails'>
-<Form.Item>
-
-</Form.Item>
-                </Form.Item> */}
-                <Form.Item label="BirthDate" style={{ marginBottom: 0 }}>
-                    <Form.Item
-                        name="year"
-                        rules={[{ required: true }]}
-                        style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                    >
-                        <Input placeholder="Input birth year" />
-                    </Form.Item>
-                    <Form.Item
-                        name="month"
-                        rules={[{ required: true }]}
-                        style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                    >
-                        <Input placeholder="Input birth month" />
-                    </Form.Item>
-                </Form.Item>
                 <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                     <Button htmlType='submit'>
                         Create a new order
@@ -122,7 +101,7 @@ export default function AddNewItem({ }: Props) {
                 </Form.Item>
             </Form>
             <Button type='primary' style={{ float: 'right' }} onClick={() => setStatus(status === 'off' ? 'on' : 'off')}>
-                Add a new one
+                {status === 'off' ? 'Add a new one' : 'Close form'}
             </Button>
         </div>
     )

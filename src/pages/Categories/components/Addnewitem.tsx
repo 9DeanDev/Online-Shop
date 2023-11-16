@@ -17,7 +17,7 @@ export default function Addnewitem({ getData }: Props) {
             }
         })
         message.success('Create success')
-        form.resetFields(['name', 'price', 'description', 'discount', 'stock'])
+        form.resetFields(['name', 'description'])
         getData()
     }
     return (
@@ -46,7 +46,7 @@ export default function Addnewitem({ getData }: Props) {
                 </Form.Item>
             </Form>
             <Button type='primary' onClick={() => setStatus(status === 'off' ? 'on' : 'off')} style={{ float: 'right' }}>
-                {status === 'off' ? 'Add new' : 'Close form'}
+                {status === 'off' ? 'Add a new one' : 'Close form'}
             </Button>
         </div>
     )

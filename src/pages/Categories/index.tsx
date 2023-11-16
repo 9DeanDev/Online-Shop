@@ -30,6 +30,7 @@ export default function Categories({ }: Props) {
             title: 'Actions',
             key: 'actions',
             width: 1,
+            align: 'center',
             render: (text: any, record: any, index: number) => {
                 return (
                     <Space>
