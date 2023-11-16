@@ -83,7 +83,7 @@ export default function Cart({ }: Props) {
                 return (
                     <Space>
                         <Button type='primary'>
-                            Edit
+                            Buy
                         </Button>
                         <Button type='primary' danger onClick={() => { remove(record.item.id) }}>
                             Delete
