@@ -26,9 +26,12 @@ const useCartStore = create<any>(
                     return set({ items: items }, false, { type: 'cart/addToCart' })
                 },
                 remove: (id: any) => {
-                    const items = get().items
-                    const newItems = items.filter((item: any) => item.item.id !== id)
-                    return set({ items: newItems }, false, { type: 'cart/removeFromCart' })
+                    if (window.confirm('Are you sure to remove this item?')) {
+                        const items = get().items
+                        const newItems = items.filter((item: any) => item.item.id !== id)
+                        message.success('Remove success')
+                        return set({ items: newItems }, false, { type: 'cart/removeFromCart' })
+                    }
                 }
             })
         ),

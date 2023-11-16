@@ -7,7 +7,7 @@ export default function User({ }: Props) {
     const { loggedInUser } = useAuthStore((state: any) => state)
     return (
         <>
-            {loggedInUser ? <div>Welcom {loggedInUser?.email} <Logout /></div> : <div>Not logged in</div>}
+            {loggedInUser ? <b>{loggedInUser?.email} <Logout /></b> : <div>Not logged in</div>}
         </>
 
     )

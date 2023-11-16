@@ -98,10 +98,13 @@ export default function Cart({ }: Props) {
             {
                 !loggedInUser ?
                     <h1>
-                        <Link to='/'>Login</Link> first to see your cart *-*
+                        <Link to='/'>Login</Link> now to see your cart *-*
                     </h1>
                     :
                     <div>
+                        <b>
+                            Your cart have {items.length} products now
+                        </b>
                         <Table dataSource={items} columns={columns} />
                         <Total />
                     </div>
