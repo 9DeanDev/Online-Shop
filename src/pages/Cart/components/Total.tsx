@@ -12,6 +12,6 @@ export default function Total({ }: Props) {
         total += sum
     }
     return (
-        <h4 style={{ color: 'white' }}>Total: {numeral(total).format('0,0.00')}đ</h4>
+        <h4 style={{ color: 'white' }}>Total: {numeral(total).format('0,0')}đ</h4>
     )
 }
