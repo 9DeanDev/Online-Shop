@@ -3,6 +3,7 @@ import { axiosClient } from '../../configs/axiosClient'
 import { Button, Space, Table, message } from 'antd'
 import EditItem from './components/EditItem'
 import Addnewitem from './components/Addnewitem'
+import { DeleteOutlined } from '@ant-design/icons'
 
 type Props = {}
 
@@ -45,9 +46,9 @@ export default function Suppliers({ }: Props) {
                 return (
                     <Space>
                         <EditItem record={record} getData={getData} />
-                        <Button type='primary' danger
+                        <Button type='default' danger
                             onClick={() => handleDeleteItem(record.id)}>
-                            Delete
+                            <DeleteOutlined />
                         </Button>
                     </Space>
                 )

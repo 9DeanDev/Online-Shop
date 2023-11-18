@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { axiosClient } from '../../configs/axiosClient'
 import { Button, Space, Table } from 'antd'
 import AddNewItem from './Components/AddNewItem'
-
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 type Props = {}
 
 export default function Orders({ }: Props) {
@@ -77,8 +77,8 @@ export default function Orders({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <Space style={{ width: '1%' }}>
-                        <Button type='primary'>Edit</Button>
-                        <Button type='primary' danger>Delete</Button>
+                        <Button ><EditOutlined /></Button>
+                        <Button danger><DeleteOutlined /></Button>
                     </Space>
                 )
             }

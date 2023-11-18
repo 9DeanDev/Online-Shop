@@ -5,6 +5,7 @@ import numeral from 'numeral'
 import Total from './components/Total'
 import { Link, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../hooks/UseAuthStore'
+import Purchase from './components/Purchase'
 
 type Props = {}
 
@@ -82,9 +83,7 @@ export default function Cart({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <Space>
-                        <Button type='primary'>
-                            Buy
-                        </Button>
+                        <Purchase />
                         <Button type='primary' danger onClick={() => { remove(record.item.id) }}>
                             Delete
                         </Button>
@@ -106,7 +105,7 @@ export default function Cart({ }: Props) {
                             Your cart have {items.length} products now
                         </b>
                         <Table dataSource={items} columns={columns} />
-                        <Total />
+                        {/* <Total /> */}
                     </div>
             }
         </>

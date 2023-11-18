@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import User from '../Home/components/User';
 import Total from '../Cart/components/Total';
+import useAuthStore from '../../hooks/UseAuthStore';
 const { Header, Content, Footer, Sider } = Layout;
 
 const navH = [
@@ -50,6 +51,7 @@ const navV = [
 type Props = {}
 
 export default function Root({ }: Props) {
+  const { loggedInUser } = useAuthStore((state: any) => state)
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -65,7 +67,7 @@ export default function Root({ }: Props) {
           onSelect={(item) => {
             navigate(item.key)
           }} />
-        <Total />
+        {loggedInUser && <Total />}
       </Header>
       <Content style={{ padding: '0px 50px' }}>
         <div style={{ textAlign: 'right', padding: '5px 0' }}>
@@ -76,7 +78,7 @@ export default function Root({ }: Props) {
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb> */}
-        <Layout style={{ padding: '24px 0', background: colorBgContainer }}>
+        <Layout style={{ padding: '24px 0', background: colorBgContainer, minHeight: '500px' }}>
           <Sider style={{ background: colorBgContainer }} width={200}>
             <Menu
               mode="inline"
@@ -94,7 +96,7 @@ export default function Root({ }: Props) {
           </Content>
         </Layout>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+      <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Dean Developer</Footer>
     </Layout>
   )
 }

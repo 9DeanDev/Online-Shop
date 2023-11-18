@@ -1,7 +1,8 @@
 import React from 'react'
 import useCartStore from '../../../hooks/UseCartStore'
 import numeral from 'numeral'
-
+import { IoCartOutline } from "react-icons/io5";
+import { Flex } from 'antd';
 type Props = {}
 
 export default function Total({ }: Props) {
@@ -12,6 +13,15 @@ export default function Total({ }: Props) {
         total += sum
     }
     return (
-        <h4 style={{ color: 'white' }}>Total: {numeral(total).format('0,0')}đ</h4>
+        <div style={{ color: 'white', fontSize: 30, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', display: 'flex' }}>
+            <div style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', display: 'flex', position: 'relative' }}>
+                <IoCartOutline />
+                <div style={{ fontSize: '16px', height: '10px', width: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: '-5px', right: '-5px' }}>
+                    {items.length}
+                </div>
+            </div>
+            <h4 style={{ color: 'white', margin: '0 10px' }}>Total: {numeral(total).format('0,0')}đ</h4>
+        </div>
+
     )
 }

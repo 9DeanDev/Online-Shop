@@ -1,6 +1,7 @@
 import { Button, Form, Input, InputNumber, Modal, Select, message } from 'antd'
 import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
+import { EditOutlined } from '@ant-design/icons';
 
 type Props = {
     record: String[],
@@ -32,8 +33,8 @@ export default function EditItem({ record, getData }: Props) {
     }
     return (
         <div>
-            <Button type='primary' onClick={() => openEditForm(record)}>
-                Edit
+            <Button onClick={() => openEditForm(record)}>
+                <EditOutlined />
             </Button>
             <Modal open={openStatus} title='UPDATE ITEM' okText='Update'
                 onCancel={() => setOpenStatus(false)}

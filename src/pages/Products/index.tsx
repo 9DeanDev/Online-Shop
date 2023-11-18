@@ -5,6 +5,7 @@ import Addnewitem from './components/Addnewitem'
 import EditItem from './components/EditItem'
 import numeral from 'numeral'
 import useCartStore from '../../hooks/UseCartStore'
+import { DeleteOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 type Props = {}
 
 export default function Products({ }: Props) {
@@ -94,13 +95,13 @@ export default function Products({ }: Props) {
                 return (
                     <Space>
                         <EditItem categories={categories} suppliers={suppliers} record={record} getData={getDataProducts} />
-                        <Button type='primary' danger
+                        <Button type='default' danger
                             onClick={() => handleDeleteItem(record.id)}>
-                            Delete
+                            <DeleteOutlined />
                         </Button>
                         <Button type='primary' onClick={() => {
                             add(record)
-                        }}>Add to cart</Button>
+                        }}><ShoppingCartOutlined /></Button>
                     </Space>
                 )
             }
