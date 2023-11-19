@@ -60,7 +60,7 @@ export default function Addnewitem({ getData }: Props) {
                     <Input />
                 </Form.Item>
                 <Form.Item label='Birthday' name='birthday' hasFeedback>
-                    <DatePicker format={'YYYY-MM-DD'} />
+                    <DatePicker format={'DD/MM/YYYY'} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 4, span: 16 }} >
                     <Button htmlType='submit'>

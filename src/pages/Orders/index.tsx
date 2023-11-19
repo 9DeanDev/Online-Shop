@@ -3,6 +3,8 @@ import { axiosClient } from '../../configs/axiosClient'
 import { Button, Space, Table } from 'antd'
 import AddNewItem from './Components/AddNewItem'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
+import moment from 'moment'
 type Props = {}
 
 export default function Orders({ }: Props) {
@@ -17,29 +19,36 @@ export default function Orders({ }: Props) {
             width: 1,
         },
         {
-            title: 'Created Date',
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+        },
+        {
+            title: 'Date',
             dataIndex: 'createdDate',
             key: 'createdDate',
+            render: (text: any, record: any, index: number) => {
+                return (
+                    <>
+                        {moment(text).format("DD/MM/YYYY HH:ss")}
+                    </>
+                )
+            }
         },
         {
-            title: 'Shipped Date',
-            dataIndex: 'shippedDate',
-            key: 'shippedDate',
+            title: 'Cart',
+            // dataIndex: 'createdDate',
+            key: 'cart',
         },
         {
-            title: 'Shipping Address',
-            dataIndex: 'shippingAddress',
-            key: 'shippingAddress',
+            title: 'Total',
+            // dataIndex: 'createdDate',
+            key: 'total',
         },
         {
-            title: 'Shipping City',
-            dataIndex: 'shippingCity',
-            key: 'shippingCity',
-        },
-        {
-            title: 'Payment Type',
-            dataIndex: 'paymentType',
-            key: 'paymentType',
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
         },
         {
             title: 'Customer',
@@ -48,7 +57,7 @@ export default function Orders({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <>
-                        {record.customer.id}
+                        {record.customer.firstName} {record.customer.lastName}
                     </>
                 )
             }
@@ -60,15 +69,10 @@ export default function Orders({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <>
-                        {record.employee.id}
+                        {record.employee.firstName} {record.employee.lastName}
                     </>
                 )
             }
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
         },
         {
             title: 'Actions',

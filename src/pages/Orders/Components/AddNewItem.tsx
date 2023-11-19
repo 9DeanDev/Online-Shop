@@ -30,46 +30,6 @@ export default function AddNewItem({ }: Props) {
                 onFinish={data => console.log(data)}
                 style={{ display: status === 'off' ? 'none' : 'block' }}
             >
-                <Form.Item label='Created Date' name='createdDate' hasFeedback>
-                    <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' />
-                </Form.Item>
-                <Form.Item label='Shipped Date' name='shippedDate' hasFeedback>
-                    <DatePicker showTime format='YYYY-MM-DD HH:mm:ss' />
-                </Form.Item>
-                <Form.Item label='Status' name='status' hasFeedback>
-                    <Select options={
-                        [
-                            {
-                                value: 1, label: 'CANCEL'
-                            },
-                            {
-                                value: 2, label: 'WAITING'
-                            },
-                            {
-                                value: 3, label: 'COMPLETED'
-                            },
-                        ]
-                    } />
-                </Form.Item>
-                <Form.Item label='Description' name='description' hasFeedback>
-                    <Input />
-                </Form.Item>
-                <Form.Item label='Shipping Address' name='shippingAddress' hasFeedback>
-                    <Input />
-                </Form.Item>
-                <Form.Item label='Shipping City' name='shippingCity' hasFeedback>
-                    <Input />
-                </Form.Item>
-                <Form.Item label='Payment Type' name='paymentType' hasFeedback>
-                    <Radio.Group>
-                        <Radio.Button value='Credit-card'>
-                            CREDIT CARD
-                        </Radio.Button>
-                        <Radio.Button value='CASH'>
-                            CASH
-                        </Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
                 <Form.Item label='Customer' name='customerId' hasFeedback
                     rules={[
                         {
@@ -93,6 +53,9 @@ export default function AddNewItem({ }: Props) {
                             value: item.id, label: item.firstName + ' ' + item.lastName
                         }
                     })} />
+                </Form.Item>
+                <Form.Item label='Description' name='description' hasFeedback>
+                    <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
                     <Button htmlType='submit'>

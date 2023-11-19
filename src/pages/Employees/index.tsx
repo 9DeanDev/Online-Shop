@@ -5,6 +5,7 @@ import EditItem from './components/EditItem'
 import Addnewitem from './components/Addnewitem'
 import { DeleteOutlined } from '@ant-design/icons'
 import useAuthStore from '../../store/UseAuthStore'
+import moment from 'moment'
 
 type Props = {}
 
@@ -48,6 +49,13 @@ export default function Employees({ }: Props) {
             title: 'Birthday',
             dataIndex: 'birthday',
             key: 'birthday',
+            render: (text: any, record: any, index: number) => {
+                return (
+                    <>
+                        {moment(text).format("DD/MM/YYYY")}
+                    </>
+                )
+            }
         },
         {
             title: 'Actions',
