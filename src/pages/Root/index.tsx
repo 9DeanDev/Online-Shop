@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import User from '../Home/components/User';
 import Total from '../Cart/components/Total';
-import useAuthStore from '../../hooks/UseAuthStore';
+import useAuthStore from '../../store/UseAuthStore';
 const { Header, Content, Footer, Sider } = Layout;
 
 const navH = [

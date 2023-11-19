@@ -1,5 +1,5 @@
 import React from 'react'
-import useAuthStore from '../../../hooks/UseAuthStore'
+import useAuthStore from '../../../store/UseAuthStore'
 import { Button, Form } from 'antd'
 
 type Props = {}

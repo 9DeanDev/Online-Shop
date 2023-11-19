@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd'
 import { useState } from 'react'
-import useAuthStore from '../../../hooks/UseAuthStore'
+import useAuthStore from '../../../store/UseAuthStore'
 type Props = {}
 
 export default function Login({ }: Props) {
@@ -13,8 +13,8 @@ export default function Login({ }: Props) {
             !loggedInUser ?
                 <>
                     <h3>Login</h3>
-                    <Form labelCol={{ span: 4 }}
-                        wrapperCol={{ span: 16 }}
+                    <Form labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 12 }}
                         onFinish={loginCheck}
                     >
                         <Form.Item label='Username' name='username'>
@@ -23,7 +23,7 @@ export default function Login({ }: Props) {
                         <Form.Item label='Password' name='password'>
                             <Input type='password' />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+                        <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
                             <Button htmlType='submit' type='primary'>
                                 Login
                             </Button>

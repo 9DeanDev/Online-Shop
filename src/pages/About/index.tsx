@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 type Props = {}
 
@@ -25,7 +25,7 @@ export default function About({ }: Props) {
                     <p>
                         Password: 123456789
                     </p>
-                    <Link to='/'>Try it now</Link>
+                    <NavLink to='/'>Try it now</NavLink>
                 </b>
             </i>
         </>

@@ -1,10 +1,10 @@
 import React from 'react'
-import useCartStore from '../../hooks/UseCartStore'
+import useCartStore from '../../store/UseCartStore'
 import { Button, Space, Table } from 'antd'
 import numeral from 'numeral'
 import Total from './components/Total'
 import { Link, useNavigate } from 'react-router-dom'
-import useAuthStore from '../../hooks/UseAuthStore'
+import useAuthStore from '../../store/UseAuthStore'
 import Purchase from './components/Purchase'
 
 type Props = {}

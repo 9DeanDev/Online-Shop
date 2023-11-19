@@ -1,6 +1,6 @@
 import { Button, Form, Modal, Radio } from 'antd'
 import React from 'react'
-import useCartStore from '../../../hooks/UseCartStore'
+import useCartStore from '../../../store/UseCartStore'
 import { useState } from 'react'
 type Props = {}
 
@@ -9,7 +9,7 @@ export default function Purchase({ }: Props) {
     const [status, setStatus] = useState(false)
     const { items } = useCartStore((state: any) => state)
     const [products, setProducts] = useState()
-    
+
     return (
         <div>
             <Button type='primary' onClick={() => setStatus(true)}>

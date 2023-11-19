@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
 import dayjs, { locale } from 'dayjs'
 import { EditOutlined } from '@ant-design/icons';
+import useAuthStore from '../../../store/UseAuthStore';
 
 type Props = {
     record: String[],
@@ -10,6 +11,7 @@ type Props = {
 }
 
 export default function EditItem({ record, getData }: Props) {
+    const { access_token } = useAuthStore((state: any) => state)
     const [initialValues, setInitialValues] = useState({ birthday: '' })
     const [editForm] = Form.useForm()
 
@@ -24,14 +26,23 @@ export default function EditItem({ record, getData }: Props) {
     }
 
     const handleEditItem = async (data: any) => {
-        let response = await axiosClient.patch(`/online-shop/customers/${idItem}`, data, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-        })
-        message.success('Update success')
-        setOpenStatus(false)
-        getData()
+        try {
+            let response = await axiosClient.patch(`/online-shop/customers/${idItem}`, data, {
+                headers: {
+                    Authorization: 'Bearer ' + access_token
+                }
+            })
+            message.success('Update success')
+            setOpenStatus(false)
+            getData()
+        }
+        catch (error: any) {
+            console.log(error)
+            if (error.response.status === 500)
+                message.error('Something wrong')
+            else
+                message.error('You are not logged in yet')
+        }
     }
     return (
         <div>

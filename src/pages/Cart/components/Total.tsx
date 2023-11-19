@@ -1,5 +1,5 @@
 import React from 'react'
-import useCartStore from '../../../hooks/UseCartStore'
+import useCartStore from '../../../store/UseCartStore'
 import numeral from 'numeral'
 import { IoCartOutline } from "react-icons/io5";
 import { Flex } from 'antd';

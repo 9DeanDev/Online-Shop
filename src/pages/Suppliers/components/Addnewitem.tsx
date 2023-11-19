@@ -1,24 +1,35 @@
 import { Button, Form, Input, InputNumber, Select, message } from 'antd'
 import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
+import useAuthStore from '../../../store/UseAuthStore'
 
 type Props = {
     getData: () => void
 }
 
 export default function Addnewitem({ getData }: Props) {
+    const { access_token } = useAuthStore((state: any) => state)
     const [form] = Form.useForm()
     const [status, setStatus] = useState<'on' | 'off'>('off')
 
     const addNewItem = async (data: any) => {
-        let response = await axiosClient.post('/online-shop/suppliers', data, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-        })
-        message.success('Create success')
-        form.resetFields(['name', 'phoneNumber', 'email', 'address'])
-        getData()
+        try {
+            let response = await axiosClient.post('/online-shop/suppliers', data, {
+                headers: {
+                    Authorization: 'Bearer ' + access_token
+                }
+            })
+            message.success('Create success')
+            form.resetFields(['name', 'phoneNumber', 'email', 'address'])
+            getData()
+        }
+        catch (error: any) {
+            console.log(error)
+            if (error.response.status === 500)
+                message.error('Something wrong')
+            else
+                message.error('You are not logged in yet')
+        }
     }
     return (
         <div>

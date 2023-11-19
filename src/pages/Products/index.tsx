@@ -4,11 +4,14 @@ import { Button, Space, Table, message } from 'antd'
 import Addnewitem from './components/Addnewitem'
 import EditItem from './components/EditItem'
 import numeral from 'numeral'
-import useCartStore from '../../hooks/UseCartStore'
+import useCartStore from '../../store/UseCartStore'
 import { DeleteOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import useAuthStore from '../../store/UseAuthStore'
 type Props = {}
 
 export default function Products({ }: Props) {
+    const { access_token } = useAuthStore((state: any) => state)
+    console.log(access_token)
     const { add } = useCartStore((state: any) => state)
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
@@ -112,17 +115,26 @@ export default function Products({ }: Props) {
         let response = await axiosClient.get('/online-shop/products')
         setProducts(response.data.reverse())
     }
-
     const handleDeleteItem = async (idItem: any) => {
-        if (window.confirm('Are you sure to delete this item?')) {
-            let response = await axiosClient.delete(`/online-shop/products/${idItem}`, {
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('access_token')
-                }
-            })
-            message.success('Delete success')
-            getDataProducts()
+        try {
+            if (window.confirm('Are you sure to delete this item?')) {
+                let response = await axiosClient.delete(`/online-shop/products/${idItem}`, {
+                    headers: {
+                        Authorization: 'Bearer ' + access_token
+                    }
+                })
+                message.success('Delete success')
+                getDataProducts()
+            }
         }
+        catch (error: any) {
+            console.log(error)
+            if (error.response.status === 500)
+                message.error('Something wrong')
+            else
+                message.error('You are not logged in yet')
+        }
+
     }
     useEffect(() => {
         getDataProducts()

@@ -2,6 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Select, message } from 'antd'
 import { useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
 import { EditOutlined } from '@ant-design/icons';
+import useAuthStore from '../../../store/UseAuthStore';
 type Props = {
     categories: String[],
     suppliers: String[],
@@ -10,7 +11,7 @@ type Props = {
 }
 
 export default function EditItem({ categories, suppliers, record, getData }: Props) {
-
+    const { access_token } = useAuthStore((state: any) => state)
     const [editForm] = Form.useForm()
 
     const [openStatus, setOpenStatus] = useState<true | false>(false)
@@ -23,14 +24,23 @@ export default function EditItem({ categories, suppliers, record, getData }: Pro
     }
 
     const handleEditItem = async (data: any) => {
-        let response = await axiosClient.patch(`/online-shop/products/${idItem}`, data, {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-        })
-        message.success('Update success')
-        setOpenStatus(false)
-        getData()
+        try {
+            let response = await axiosClient.patch(`/online-shop/products/${idItem}`, data, {
+                headers: {
+                    Authorization: 'Bearer ' + access_token
+                }
+            })
+            message.success('Update success')
+            setOpenStatus(false)
+            getData()
+        }
+        catch (error: any) {
+            console.log(error)
+            if (error.response.status === 500)
+                message.error('Something wrong')
+            else
+                message.error('You are not logged in yet')
+        }
     }
     return (
         <div>
