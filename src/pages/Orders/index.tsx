@@ -5,11 +5,28 @@ import AddNewItem from './Components/AddNewItem'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import moment from 'moment'
+import EditItem from './Components/EditItem'
+import useAuthStore from '../../store/UseAuthStore'
 type Props = {}
 
 export default function Orders({ }: Props) {
+    const { access_token } = useAuthStore((state: any) => state)
     const [orders, setOrders] = useState([])
-
+    let [productsData, setProductsData] = useState<any>([])
+    const getProductsData = async () => {
+        let response = await axiosClient.get('/online-shop/products')
+        setProductsData(response.data)
+    }
+    const handleDelete = async (id: any) => {
+        if (window.confirm("Are you sure to delete this order?")) {
+            let response = await axiosClient.delete(`/online-shop/orders/${id}`, {
+                headers: {
+                    Authorization: 'Bearer ' + access_token
+                }
+            })
+            getData()
+        }
+    }
     const columns: any = [
         {
             title: 'ID',
@@ -39,11 +56,31 @@ export default function Orders({ }: Props) {
             title: 'Cart',
             // dataIndex: 'createdDate',
             key: 'cart',
+            align: 'center',
+            render: (text: any, record: any, index: number) => {
+                return (
+                    <>
+                        {record.orderDetails.length}
+                    </>
+                )
+            },
         },
         {
             title: 'Total',
             // dataIndex: 'createdDate',
             key: 'total',
+            align: 'right',
+            render: (text: any, record: any, index: number) => {
+                var total = 0
+                for (let i = 0; i < record.orderDetails.length; i++) {
+                    total = total + (record.orderDetails[i].price * record.orderDetails[i].quantity) * (100 - record.orderDetails[i].discount) / 100
+                }
+                return (
+                    <>
+                        {total}đ
+                    </>
+                )
+            },
         },
         {
             title: 'Description',
@@ -81,25 +118,25 @@ export default function Orders({ }: Props) {
             render: (text: any, record: any, index: number) => {
                 return (
                     <Space style={{ width: '1%' }}>
-                        <Button ><EditOutlined /></Button>
-                        <Button danger><DeleteOutlined /></Button>
+                        <EditItem record={record} productsData={productsData} getData={getData} />
+                        <Button danger onClick={() => handleDelete(record.id)}><DeleteOutlined /></Button>
                     </Space>
                 )
             }
         }
     ]
-
+    const getData = async () => {
+        let response = await axiosClient.get('/online-shop/orders')
+        setOrders(response.data.reverse())
+    }
     useEffect(() => {
-        const getData = async () => {
-            let response = await axiosClient.get('/online-shop/orders')
-            setOrders(response.data.reverse())
-        }
         getData()
+        getProductsData()
     }, [])
 
     return (
         <div>
-            <AddNewItem />
+            <AddNewItem getData={getData} />
             <Table dataSource={orders} columns={columns} />
         </div>
     )

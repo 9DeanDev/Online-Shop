@@ -1,10 +1,15 @@
-import { Button, DatePicker, Form, Input, Radio, Select } from 'antd'
+import { Button, DatePicker, Form, Input, Radio, Select, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { axiosClient } from '../../../configs/axiosClient'
+import useAuthStore from '../../../store/UseAuthStore'
 
-type Props = {}
+type Props = {
+    getData: () => void
+}
 
-export default function AddNewItem({ }: Props) {
+export default function AddNewItem({ getData }: Props) {
+    const [form] = Form.useForm()
+    const { access_token } = useAuthStore((state: any) => state)
     const [customers, setCustomers] = useState([])
     const [employees, setEmployees] = useState([])
     const [status, setStatus] = useState<'on' | 'off'>('off')
@@ -22,12 +27,32 @@ export default function AddNewItem({ }: Props) {
         getDataCustomers()
         getDataEmployees()
     }, [])
-
+    const addNewItem = async (data: any) => {
+        try {
+            let dataFinal = { ...data, orderDetails: [] }
+            let response = await axiosClient.post('/online-shop/orders', dataFinal, {
+                headers: {
+                    Authorization: 'Bearer ' + access_token
+                }
+            })
+            message.success('Add new order success')
+            form.resetFields()
+            getData()
+        }
+        catch (error: any) {
+            console.log(error)
+            if (error.response.status === 500) {
+                message.error('Something wrong')
+            }
+            else message.error('You are not logged in yet')
+        }
+    }
     return (
         <div>
-            <Form labelCol={{ span: 4 }}
+            <Form form={form}
+                labelCol={{ span: 4 }}
                 wrapperCol={{ span: 16 }}
-                onFinish={data => console.log(data)}
+                onFinish={addNewItem}
                 style={{ display: status === 'off' ? 'none' : 'block' }}
             >
                 <Form.Item label='Customer' name='customerId' hasFeedback
