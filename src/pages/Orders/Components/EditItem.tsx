@@ -61,33 +61,25 @@ export default function EditItem({ record, productsData, getData }: Props) {
     }
 
     const handleDelete = async (data: any) => {
-        let key = data.product.value
-        ordersData = {
-            'orderDetails': [...ordersData, {
-                'productId': productsData[key].id,
-                'quantity': data.quantity,
-                'price': productsData[key].price,
-                'discount': productsData[key].discount
-            }]
-        }
-        console.log(ordersData)
-        try {
-            let response = await axiosClient.patch(`/online-shop/orders/${record.id}`, ordersData, {
-                headers: {
-                    Authorization: 'Bearer ' + access_token
-                }
-            })
-            message.success('Add product to order success')
-            form.resetFields()
-            getOrdersData()
-            getData()
-        }
-        catch (error: any) {
-            if (error.response.status === 500) {
-                message.error('Something wrong')
+        newOrdersData = { 'orderDetails': ordersData.filter((item: any) => item.product.id !== data.product.id) }
+        console.log(record)
+        console.log(newOrdersData)
+        if (window.confirm('Are you sure to remove this product?')) {
+            try {
+                let response = await axiosClient.patch(`/online-shop/orders/${record.id}`, newOrdersData, {
+                    headers: {
+                        Authorization: 'Bearer ' + access_token
+                    }
+                })
+                message.success('Remove product success')
+                getOrdersData()
+                getData()
             }
-            if (error.response.status === 401) {
-                message.error('You are not logged in yet')
+            catch (error: any) {
+                if (error.response.status === 401) {
+                    message.error('You are not logged in yet')
+                }
+                else message.error('Something wrong')
             }
         }
     }
