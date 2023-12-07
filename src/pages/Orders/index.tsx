@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { axiosClient } from '../../configs/axiosClient'
-import { Button, Space, Table } from 'antd'
+import { Button, Space, Table, message } from 'antd'
 import AddNewItem from './Components/AddNewItem'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
@@ -19,12 +19,19 @@ export default function Orders({ }: Props) {
     }
     const handleDelete = async (id: any) => {
         if (window.confirm("Are you sure to delete this order?")) {
-            let response = await axiosClient.delete(`/online-shop/orders/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + access_token
-                }
-            })
-            getData()
+            try {
+                let response = await axiosClient.delete(`/online-shop/orders/${id}`, {
+                    headers: {
+                        Authorization: 'Bearer ' + access_token
+                    }
+                })
+                getData()
+            }
+            catch (error: any) {
+                if (error.response.status == 401) {
+                    message.error('You are not logged in yet')
+                } else message.error('Something wrong')
+            }
         }
     }
     const columns: any = [
